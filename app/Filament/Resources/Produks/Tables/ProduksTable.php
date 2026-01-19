@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\Brands\Tables;
+namespace App\Filament\Resources\Produks\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class BrandsTable
+class ProduksTable
 {
     public static function configure(Table $table): Table
     {
@@ -21,9 +19,21 @@ class BrandsTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('slug')
+                ImageColumn::make('thumb')
+                    ->label("foto")
+                    ->circular(),
+                TextColumn::make('price')
+                    ->label("harga")
+                    ->money()
+                    ->sortable(),
+                TextColumn::make('stock')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('category.name')
                     ->searchable(),
-                ImageColumn::make('logo'),
+                TextColumn::make('brand.name')
+                    ->label("merek")
+                    ->searchable(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -38,7 +48,7 @@ class BrandsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -47,8 +57,6 @@ class BrandsTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
