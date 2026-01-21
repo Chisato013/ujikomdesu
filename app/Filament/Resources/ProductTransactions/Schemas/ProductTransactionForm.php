@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\ProductTransactions\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Filament\Tables\Columns\ImageColumn;
 
 class ProductTransactionForm
 {
@@ -17,20 +19,23 @@ class ProductTransactionForm
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('phone')
-                    ->tel()
+                    ->type('number')
                     ->required(),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
                     ->required(),
-                TextInput::make('booking_trx_id')
-                    ->required(),
                 TextInput::make('city')
                     ->required(),
                 TextInput::make('post_code')
+                    ->type('number')
                     ->required(),
-                TextInput::make('proof')
-                    ->required(),
+                FileUpload::make('proof')
+                    ->directory('product-transactions')
+                    ->maxSize(1024)
+                    ->image()
+                    ->required()
+                    ->nullable(),
                 TextInput::make('produk_size')
                     ->required()
                     ->numeric(),
@@ -40,19 +45,16 @@ class ProductTransactionForm
                 TextInput::make('quantity')
                     ->required()
                     ->numeric(),
-                TextInput::make('subTotal_amount')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('grand_total_amount')
-                    ->required()
-                    ->numeric(),
                 Toggle::make('is_paid')
                     ->required(),
-                TextInput::make('id_produk')
-                    ->required()
-                    ->numeric(),
+                Select::make('id_produk')
+                    ->relationship('produk','name')
+                    ->label('Product')
+                    ->required(),
                 Select::make('promo_code_id')
-                    ->relationship('promoCode', 'id'),
+                    ->relationship('promoCode', 'code')  // Tampilkan kolom 'code' dari PromoCode
+                    ->label('Promo Code')
+                    ->nullable(),
             ]);
     }
 }

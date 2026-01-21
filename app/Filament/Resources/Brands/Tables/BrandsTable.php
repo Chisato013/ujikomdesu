@@ -23,7 +23,8 @@ class BrandsTable
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-                ImageColumn::make('logo'),
+                ImageColumn::make('logo')
+                    ->circular(),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()

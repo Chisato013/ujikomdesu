@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -23,26 +24,18 @@ class ProductTransactionsTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
-                TextColumn::make('booking_trx_id')
-                    ->searchable(),
                 TextColumn::make('city')
                     ->searchable(),
                 TextColumn::make('post_code')
                     ->searchable(),
-                TextColumn::make('proof')
+                ImageColumn::make('proof')
                     ->searchable(),
                 TextColumn::make('produk_size')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('quantity')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('subTotal_amount')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('grand_total_amount')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable(),   
                 IconColumn::make('is_paid')
                     ->boolean(),
                 TextColumn::make('id_produk')
